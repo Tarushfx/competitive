@@ -16,8 +16,8 @@ public:
         this->tree = vi(size, 0);
         build_tree(0, 0, arr_size - 1);
     }
-    int left_subtree(int node) { return 2 * node + 1; }
-    int right_subtree(int node) { return 2 * node + 2; }
+    int left_child(int node) { return 2 * node + 1; }
+    int right_child(int node) { return 2 * node + 2; }
     int build_tree(int node, int start, int end)
     {
         if (start == end)
@@ -25,8 +25,8 @@ public:
             return tree[node] = arr[start];
         }
         int mid = get_mid(start, end);
-        return tree[node] = build_tree(left_subtree(node), start, mid) +
-                            build_tree(right_subtree(node), mid + 1, end);
+        return tree[node] = build_tree(left_child(node), start, mid) +
+                            build_tree(right_child(node), mid + 1, end);
     }
     void update_value(int index, int value)
     {
@@ -49,8 +49,8 @@ public:
             return;
         }
         int mid = get_mid(start, end);
-        update_helper(left_subtree(node), start, mid, index, diff);
-        update_helper(right_subtree(node), mid + 1, end, index, diff);
+        update_helper(left_child(node), start, mid, index, diff);
+        update_helper(right_child(node), mid + 1, end, index, diff);
     }
     int get_mid(int start, int end)
     {
@@ -67,8 +67,8 @@ public:
         if (start > right || end < left)
             return 0;
         int mid = get_mid(start, end);
-        return query_helper(left_subtree(node), start, mid, left, right) +
-               query_helper(right_subtree(node), mid + 1, end, left, right);
+        return query_helper(left_child(node), start, mid, left, right) +
+               query_helper(right_child(node), mid + 1, end, left, right);
     }
 };
 
@@ -87,8 +87,8 @@ public:
         this->lazy = vi(size, 0);
         build_tree(0, 0, arr_size - 1);
     }
-    int left_subtree(int node) { return 2 * node + 1; }
-    int right_subtree(int node) { return 2 * node + 2; }
+    int left_child(int node) { return 2 * node + 1; }
+    int right_child(int node) { return 2 * node + 2; }
     int build_tree(int node, int start, int end)
     {
         if (start == end)
@@ -96,8 +96,8 @@ public:
             return tree[node] = arr[start];
         }
         int mid = get_mid(start, end);
-        return tree[node] = build_tree(left_subtree(node), start, mid) +
-                            build_tree(right_subtree(node), mid + 1, end);
+        return tree[node] = build_tree(left_child(node), start, mid) +
+                            build_tree(right_child(node), mid + 1, end);
     }
     void update_diff(int index, int diff)
     {
@@ -115,8 +115,8 @@ public:
             tree[node] += lazy[node] * (end - start + 1);
             if (start != end)
             {
-                lazy[left_subtree(node)] += lazy[node];
-                lazy[right_subtree(node)] += lazy[node];
+                lazy[left_child(node)] += lazy[node];
+                lazy[right_child(node)] += lazy[node];
             }
             lazy[node] = 0;
         }
@@ -127,17 +127,17 @@ public:
             tree[node] += diff * (end - start + 1);
             if (start != end)
             {
-                lazy[left_subtree(node)] += diff;
-                lazy[right_subtree(node)] += diff;
+                lazy[left_child(node)] += diff;
+                lazy[right_child(node)] += diff;
             }
 
             // lazy[node] = 0;
             return;
         }
         int mid = get_mid(start, end);
-        update_helper(left_subtree(node), start, mid, left, right, diff);
-        update_helper(right_subtree(node), mid + 1, end, left, right, diff);
-        tree[node] = tree[left_subtree(node)] + tree[right_subtree(node)];
+        update_helper(left_child(node), start, mid, left, right, diff);
+        update_helper(right_child(node), mid + 1, end, left, right, diff);
+        tree[node] = tree[left_child(node)] + tree[right_child(node)];
     }
     int get_mid(int start, int end)
     {
@@ -154,8 +154,8 @@ public:
             tree[node] += lazy[node] * (end - start + 1);
             if (start != end)
             {
-                lazy[left_subtree(node)] += lazy[node];
-                lazy[right_subtree(node)] += lazy[node];
+                lazy[left_child(node)] += lazy[node];
+                lazy[right_child(node)] += lazy[node];
             }
             lazy[node] = 0;
         }
@@ -166,8 +166,15 @@ public:
         if (start > right || end < left)
             return 0;
         int mid = get_mid(start, end);
-        return query_helper(left_subtree(node), start, mid, left, right) +
-               query_helper(right_subtree(node), mid + 1, end, left, right);
+        return query_helper(left_child(node), start, mid, left, right) +
+               query_helper(right_child(node), mid + 1, end, left, right);
+    }
+    void clear()
+    {
+        for (int i = 0; i < arr_size; i++)
+        {
+            query(i, i);
+        }
     }
 };
 int main()

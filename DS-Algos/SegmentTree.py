@@ -134,6 +134,10 @@ class LazySegmentTree:
             self.left_child(node), start, mid, left, right
         ) + self.query_helper(self.right_child(node), mid + 1, end, left, right)
 
+    def clear(self):
+        for i in range(self.arr_size):
+            self.query(i, i)
+
 
 if __name__ == "__main__":
     arr = [2, 12, 3, 4]

@@ -16,9 +16,9 @@ public:
         this->tree = vi(size + 1, 0);
         build_tree();
     }
-    int parent(int index)
+    int LSB(int index)
     {
-        return index + (index & -index);
+        return (index & -index);
     }
     void build_tree()
     {
@@ -28,7 +28,7 @@ public:
             while (index <= size)
             {
                 tree[index] += arr[i - 1];
-                index = parent(index);
+                index += LSB(index);
             }
         }
     }
@@ -48,7 +48,7 @@ public:
         while (index <= size)
         {
             tree[index] += diff;
-            index = parent(index);
+            index += LSB(index);
         }
     }
     int query(int left, int right)
@@ -62,7 +62,7 @@ public:
         while (index > 0)
         {
             res += tree[index];
-            index -= (index & -index);
+            index -= LSB(index);
         }
         return res;
     }

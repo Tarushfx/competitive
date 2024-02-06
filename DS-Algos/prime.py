@@ -56,9 +56,10 @@ def diophantine(A, B, C):
 
 
 if __name__ == "__main__":
-    low, high = [int(i) for i in input().split()]
-    primes = sieve(int(sqrt(high) + 1))
-    N = 1e5 + 1
+    # low, high = [int(i) for i in input().split()]
+    # primes = sieve(int(sqrt(high) + 1))
+    # N = 1e5 + 1
     # primes = sieve(N)
-    ans = segmented_sieve(low, high, primes)
-    print(*ans)
+    # ans = segmented_sieve(low, high, primes)
+    # print(*ans)
+    print(modulo_inv(9, 10**9 + 5), (7 * modulo_inv(9, 10**9 + 5)) % (10**9 + 7))
