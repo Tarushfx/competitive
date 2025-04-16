@@ -13,7 +13,7 @@ class DSU:
         else:
             self.parent[pa] = pb
             self.rank[pb] += self.rank[pa]
-            return True
+        return True
 
     def find(self, a):
         if self.parent[a] == -1:
