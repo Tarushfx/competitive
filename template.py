@@ -18,7 +18,7 @@ def pow(a, b, mod):
             x = (x * a) % mod
         a = (a * a) % mod
         b >>= 1
-    return a
+    return x
 
 
 def debug(**kwargs):
